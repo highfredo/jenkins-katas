@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('clone down') {
       agent {
-        label 'swarm'
+        label 'master-label'
       }
       steps {
         stash excludes: '.git', name: 'code'
