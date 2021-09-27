@@ -26,3 +26,4 @@ without 2020
 └── setup           # Setup of jenkins.
 
 ```
+fuerza pr
