@@ -26,3 +26,5 @@ without 2020
 └── setup           # Setup of jenkins.
 
 ```
+
+fuerzo un cambio en dev/* para que se salte el component test y no publique en docker hub
