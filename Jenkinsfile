@@ -59,7 +59,7 @@ pipeline {
       }
     }
 
-    stage('') {
+    stage('pull docker') {
       environment {
         DOCKERCREDS = 'credentials(\'docker_login\')'
       }
