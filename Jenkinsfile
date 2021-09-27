@@ -24,5 +24,11 @@ pipeline {
       }
     }
 
+    stage('Archiva binario') {
+      steps {
+        archiveArtifacts 'app/build/libs/'
+      }
+    }
+
   }
 }
