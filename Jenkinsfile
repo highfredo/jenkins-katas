@@ -40,6 +40,12 @@ pipeline {
         }
 
         stage('test app') {
+          agent {
+            docker {
+              image 'gradle:6-jdk11'
+            }
+
+          }
           options {
             skipDefaultCheckout(true)
           }
@@ -84,7 +90,13 @@ pipeline {
       }
       when { 
         beforeAgent true
-        branch pattern: "dev/*"
+        // not { 
+        //   branch pattern: "dev/*"
+        // }
+        anyOf { 
+          branch 'master' 
+          changeRequest()
+        }
       }
       options {
         skipDefaultCheckout(true)
