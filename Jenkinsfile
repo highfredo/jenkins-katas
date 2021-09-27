@@ -93,7 +93,6 @@ pipeline {
         branch pattern: "dev/*"
       }
       options {
-        beforeAgent true
         skipDefaultCheckout(true)
       }
       steps {
