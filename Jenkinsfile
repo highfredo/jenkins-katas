@@ -59,16 +59,46 @@ pipeline {
       }
     }
 
-    stage('push docker app') {
+    stage('build docker') {
+      steps {
+        unstash 'code'
+        sh 'ci/build-docker.sh'
+        stash 'code'
+      }
+    }
+
+    stage('push docker') {
       environment {
         DOCKERCREDS = credentials('docker_login')
       }
+      when { 
+        beforeAgent true
+        branch "master" 
+      }
       steps {
         unstash 'code'
-        sh 'echo "$DOCKERCREDS_USR" '
-        sh 'ci/build-docker.sh'
         sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
         sh 'ci/push-docker.sh'
+      }
+    }
+
+    stage('component test') {
+      agent {
+        docker {
+          image 'gradle:6-jdk11'
+        }
+      }
+      when { 
+        beforeAgent true
+        branch pattern: "dev/*"
+      }
+      options {
+        beforeAgent true
+        skipDefaultCheckout(true)
+      }
+      steps {
+        unstash 'code'
+        sh 'ci/component-test.sh'
       }
     }
 
