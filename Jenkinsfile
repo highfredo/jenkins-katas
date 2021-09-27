@@ -83,11 +83,6 @@ pipeline {
     }
 
     stage('component test') {
-      agent {
-        docker {
-          image 'gradle:6-jdk11'
-        }
-      }
       when { 
         beforeAgent true
         branch pattern: "dev/*"
